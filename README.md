@@ -23,6 +23,10 @@ same machine). Method, caveats and raw output: [docs/results.md](docs/results.md
 The cache does not lower p95 in write-heavy traffic (it adds ~1 ms on misses); see
 [docs/results.md](docs/results.md#2-account-query-latency-indexes--redis).
 
+Every row reproduced on a fresh stack in a second run the same evening, except a 20-minute
+throughput run that overlapped another project's CPU-heavy build on the shared host (p99 ~1 s,
+0 errors); see [docs/results.md](docs/results.md#5-rerun-on-a-fresh-stack).
+
 ## Architecture
 
 ```

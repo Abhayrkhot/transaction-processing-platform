@@ -160,3 +160,42 @@ reconciliation run reported a break that was not seeded.
 
 Per-run detail, including the list of missed case ids: `results/raw/risk-risk-s*.json`.
 
+
+## 5. Rerun on a fresh stack
+
+The whole suite was run again the same evening (21:03–22:11) on a fresh database: same code
+(`16477dc`), same scripts, same order, results under `results/raw/*rerun*` and
+`results/raw/risk-risk-s*-17952*.json`. A 30-second load sample (`rerun-load.log`) starts at 21:24.
+
+| measurement | first run | rerun |
+|---|---|---|
+| throughput, final config, 2,500/s × 15 min | p99 19.5 ms, 0 errors, 0 dropped | **p50 5.3, p95 9.0, p99 15.3, p99.9 42.7 ms, 0 errors, 0 dropped** |
+| account query p95 @ 200 r/s + 1,000 w/s: baseline | 570 ms | 158 ms (p99 523 ms) |
+| … composite index | 2.14 ms | 2.09 ms |
+| … index + Redis | 3.34 ms | 2.69 ms |
+| read-heavy 3,000 r/s + 300 w/s: p95 index / index + Redis | 1.96 / 2.34 ms | 1.87 / 2.37 ms |
+| … cache hit rate | 82.3% | 82.3% |
+| Kafka chaos: postings / duplicates / wrong balances | 100,000 / 0 / 0 | 100,000 / 0 / 0 |
+| … poison dead-lettered / valid dead-lettered | 50 / 0 | 50 / 0 |
+| … ingest deliveries retried during the outage | 24 | 24 |
+| seeded anomalies, held-out seeds 2–5 | 3,199 / 3,200 | 3,199 / 3,200 (same miss) |
+| seeded anomalies, seed 1 | 797 / 800 (before the rule fixes) | 800 / 800 |
+
+Everything on the optimised path reproduced within noise. The streams are deterministic per seed, so
+seeds 2–5 give identical results (alerts on ordinary transfers 63 / 57 / 74 / 61 both times); across
+all five seeds after the rule fixes: **3,999 / 4,000 (99.975%)**. The baseline query is the noisy number:
+its plan sorts every entry of a hot merchant account, so it moves with that account's depth, the
+buffer cache and host load. The ~1,750 dropped reads in the cached read-heavy phase also recurred
+(1,740 vs 1,787), so that is a property of the cache path, not noise.
+
+**The 20-minute history run did not hold the rate the second time:** 2,938,509 transfers at
+2,448.7/s, p50 7.0 ms but p95 917 ms and p99 1,087 ms, 61,493 iterations dropped, 0 errors. During it
+another project's container was compiling C++ at ~590% CPU; when the run ended the load average was
+26–30 on 20 cores with CPU pressure ("some") at ~25%, against 17–20 and no build during the first
+run's history phase. The 15-minute run with the same code and configuration, after that build had
+finished (load ~7–11), was the best of all runs (p99 15.3 ms). With every core busy, Postgres
+backends that hold account row locks get descheduled and requests queue behind them; latency
+degrades sharply but nothing is lost — 0 errors, and the ledger integrity check passed after the
+15-minute run and again at the end (6.9M transactions, 6.7 GB). The history run itself has no
+integrity file because `bench-throughput.sh` stopped at the failed k6 latency threshold; it now runs
+the check regardless.

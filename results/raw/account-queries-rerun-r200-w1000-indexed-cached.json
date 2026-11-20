@@ -1,0 +1,86 @@
+{
+  "name": "account-queries-rerun-r200-w1000-indexed-cached",
+  "env": {
+    "DURATION": "5m",
+    "READ_RATE": "200",
+    "WRITE_RATE": "1000"
+  },
+  "metrics": {
+    "dropped_iterations": {
+      "count": 323,
+      "rate": 1.0766439289051013
+    },
+    "iterations": {
+      "count": 359679,
+      "rate": 1198.9046802001792
+    },
+    "http_req_duration{scenario:writes}": {
+      "med": 4.962118500000001,
+      "p(90)": 7.0903488999999995,
+      "p(95)": 7.9295389499999915,
+      "p(99)": 11.19979951999996,
+      "max": 908.710474,
+      "avg": 6.354494762038105,
+      "min": 2.593986
+    },
+    "dropped_iterations{scenario:reads}": {
+      "count": 0,
+      "rate": 0
+    },
+    "http_req_failed{scenario:writes}": {
+      "fails": 299678,
+      "rate": 0,
+      "passes": 0
+    },
+    "http_reqs": {
+      "count": 359679,
+      "rate": 1198.9046802001792
+    },
+    "checks": {
+      "rate": 1,
+      "passes": 359679,
+      "fails": 0
+    },
+    "http_req_failed{scenario:reads}": {
+      "fails": 60001,
+      "rate": 0,
+      "passes": 0
+    },
+    "dropped_iterations{scenario:writes}": {
+      "count": 323,
+      "rate": 1.0766439289051013
+    },
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 359679
+    },
+    "http_req_duration{expected_response:true}": {
+      "avg": 5.806974848047869,
+      "min": 0.300856,
+      "med": 4.669351,
+      "p(90)": 6.8860108,
+      "p(95)": 7.733939999999999,
+      "p(99)": 10.837449759999974,
+      "max": 941.56436
+    },
+    "http_req_duration{scenario:reads}": {
+      "p(95)": 2.693517,
+      "p(99)": 4.217953,
+      "max": 941.56436,
+      "avg": 3.072359211896486,
+      "min": 0.300856,
+      "med": 1.198122,
+      "p(90)": 2.290917
+    },
+    "http_req_duration": {
+      "p(90)": 6.8860108,
+      "p(95)": 7.733939999999999,
+      "p(99)": 10.837449759999974,
+      "max": 941.56436,
+      "avg": 5.806974848047869,
+      "min": 0.300856,
+      "med": 4.669351
+    }
+  }
+}

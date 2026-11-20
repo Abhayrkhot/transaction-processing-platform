@@ -1,0 +1,51 @@
+{
+  "name": "rerun-throughput-2500rps-15m",
+  "env": {
+    "RATE": "2500",
+    "DURATION": "15m"
+  },
+  "metrics": {
+    "http_reqs": {
+      "count": 2250001,
+      "rate": 2499.984819210041
+    },
+    "checks": {
+      "rate": 1,
+      "passes": 2250001,
+      "fails": 0
+    },
+    "http_req_duration": {
+      "p(95)": 8.956219,
+      "p(99)": 15.288559,
+      "p(99.9)": 42.71027200000384,
+      "max": 181.773512,
+      "avg": 5.7355511729898145,
+      "min": 2.758021,
+      "med": 5.2722,
+      "p(90)": 7.491247
+    },
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 2250001
+    },
+    "http_req_duration{expected_response:true}": {
+      "p(95)": 8.956219,
+      "p(99)": 15.288559,
+      "p(99.9)": 42.71027200000384,
+      "max": 181.773512,
+      "avg": 5.7355511729898145,
+      "min": 2.758021,
+      "med": 5.2722,
+      "p(90)": 7.491247
+    },
+    "iterations": {
+      "rate": 2499.984819210041,
+      "count": 2250001
+    },
+    "dropped_iterations": {
+      "count": 0,
+      "rate": 0
+    }
+  }
+}

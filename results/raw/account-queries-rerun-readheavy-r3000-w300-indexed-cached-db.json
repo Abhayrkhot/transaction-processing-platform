@@ -1,0 +1,1 @@
+{"phase":"indexed-cached","before":{"pg":{"xact_commit" : 8588329, "tup_returned" : 9002915468, "tup_fetched" : 12573244587, "blks_hit" : 8772013063},"cache_hit":0.0,"cache_miss":0.0},"after":{"pg":{"xact_commit" : 8799602, "tup_returned" : 9042073750, "tup_fetched" : 12612249359, "blks_hit" : 8816258677},"cache_hit":443013.0,"cache_miss":95248.0}}

@@ -1,0 +1,55 @@
+== stack up (fresh volume) 21:03:07 (load 2.31 2.15 2.40)
+ Container ledger-ledger-1  Healthy
+== seed 10k customers + 1k merchants 21:03:26 (load 3.20 2.35 2.47)
+seeded 10000 customers, 1000 merchants in 18.4s -> ~/Projects/transaction-processing-platform/bench-data
+== history: 2500 rps x 20 min 21:03:45 (load 4.20 2.65 2.56)
+  exit=99
+  2,938,509 reqs @ 2448.7/s  p50 7.0  p95 917.5  p99 1087.0  p99.9 1293.3 ms  failed 0  dropped 61493
+== account queries: 200 reads/s + 1000 writes/s, 3 phases x 5 min 21:23:48 (load 26.38 29.58 23.01)
+  exit=0
+  rerun-r200-w1000-baseline: reads p50 4.18  p95 158.17  p99 523.40 | writes p95 14.18 | dropped r/w 0/907
+  rerun-r200-w1000-indexed: reads p50 0.93  p95 2.09  p99 2.65 | writes p95 7.42 | dropped r/w 0/0
+  rerun-r200-w1000-indexed-cached: reads p50 1.20  p95 2.69  p99 4.22 | writes p95 7.93 | dropped r/w 0/323
+== read-heavy cache test: 3000 reads/s + 300 writes/s 21:39:33 (load 8.88 11.53 16.54)
+  exit=0
+  rerun-readheavy-r3000-w300-indexed: reads p50 0.85  p95 1.87  p99 3.45 | writes p95 6.27 | dropped r/w 18/0
+  rerun-readheavy-r3000-w300-indexed-cached: reads p50 0.62  p95 2.37  p99 6.10 | writes p95 7.88 | dropped r/w 1740/0
+  cache hit rate 0.823 (443013/538261)
+== final throughput: 2500 rps x 15 min 21:45:53 (load 7.20 8.63 13.52)
+  exit=0
+  2,250,001 reqs @ 2500.0/s  p50 5.3  p95 9.0  p99 15.3  p99.9 42.7 ms  failed 0  dropped 0
+  integrity: {"ok":true,"balanceByCurrency":{"USD":0},"accountsNotMatchingEntries":0,"unbalancedTransactions":0,"postedWithoutEntries":0}
+== kafka chaos: 125k messages, postgres outage + SIGKILL 22:01:00 (load 11.75 13.97 14.94)
+  exit=0
+  chaos: stopping postgres for 15s at 22:01:10
+  chaos: postgres back at 22:01:27
+  chaos: SIGKILL ledger at 22:01:42
+  chaos: ledger restarted at 22:01:49
+  drained after 54.1s of waiting
+   "transactionsForRun": 100000,
+   "duplicatePostings": 0,
+   "accountsWithWrongBalance": 0,
+   "deadLetteredPoison": 50,
+   "deadLetteredValid": 0,
+   "ledgerIntegrity": {"ok":true,"balanceByCurrency":{"USD":0},"accountsNotMatchingEntries":0,"unbalancedTransactions":0,"postedWithoutEntries":0},
+   "ok": true
+  before-kill ledger_kafka_dead_lettered_total{topic="ledger.transfer-requests"} 27.0
+  before-kill ledger_kafka_retries_total{topic="ledger.transfer-requests"} 51.0
+  before-kill ledger_transfers_total{channel="api",outcome="posted"} 2304002.0
+  before-kill ledger_transfers_total{channel="kafka",outcome="posted"} 49217.0
+  before-kill ledger_transfers_total{channel="kafka",outcome="replayed"} 9269.0
+  after-restart ledger_kafka_dead_lettered_total{topic="ledger.transfer-requests"} 23.0
+  after-restart ledger_kafka_retries_total{topic="ledger.transfer-requests"} 23.0
+  after-restart ledger_transfers_total{channel="kafka",outcome="posted"} 50641.0
+  after-restart ledger_transfers_total{channel="kafka",outcome="replayed"} 16067.0
+== risk + reconciliation: seeds 1-5 22:03:04 (load 5.95 10.91 13.69)
+  exit=0
+  risk-s1-1795212184: fraud 1.0000  recon 1.0000  all 800/800  fp-alerts 71  missed []
+  risk-s2-1795212288: fraud 1.0000  recon 1.0000  all 800/800  fp-alerts 63  missed []
+  risk-s3-1795212386: fraud 0.9983  recon 1.0000  all 799/800  fp-alerts 57  missed ['STRUCTURING-6']
+  risk-s4-1795212490: fraud 1.0000  recon 1.0000  all 800/800  fp-alerts 74  missed []
+  risk-s5-1795212592: fraud 1.0000  recon 1.0000  all 800/800  fp-alerts 61  missed []
+== final ledger state 22:11:34 (load 9.02 9.35 11.60)
+{"ok":true,"balanceByCurrency":{"USD":0},"accountsNotMatchingEntries":0,"unbalancedTransactions":0,"postedWithoutEntries":0}
+6885053 6696 MB 
+RERUN DONE 22:11:40

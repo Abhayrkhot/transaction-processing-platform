@@ -1,0 +1,86 @@
+{
+  "name": "account-queries-rerun-readheavy-r3000-w300-indexed",
+  "env": {
+    "DURATION": "3m",
+    "READ_RATE": "3000",
+    "WRITE_RATE": "300"
+  },
+  "metrics": {
+    "dropped_iterations": {
+      "count": 18,
+      "rate": 0.09999927463859486
+    },
+    "http_reqs": {
+      "count": 593984,
+      "rate": 3299.887174829507
+    },
+    "checks": {
+      "passes": 593984,
+      "fails": 0,
+      "rate": 1
+    },
+    "dropped_iterations{scenario:writes}": {
+      "count": 0,
+      "rate": 0
+    },
+    "http_req_failed{scenario:reads}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 539984
+    },
+    "http_req_failed{scenario:writes}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 54000
+    },
+    "http_req_duration{expected_response:true}": {
+      "avg": 1.3988918786616766,
+      "min": 0.283635,
+      "med": 0.8916065,
+      "p(90)": 2.2392383000000007,
+      "p(95)": 3.7047092,
+      "p(99)": 5.98984704000003,
+      "max": 555.033358
+    },
+    "iterations": {
+      "count": 593984,
+      "rate": 3299.887174829507
+    },
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 593984
+    },
+    "http_req_duration": {
+      "p(99)": 5.98984704000003,
+      "max": 555.033358,
+      "avg": 1.3988918786616766,
+      "min": 0.283635,
+      "med": 0.8916065,
+      "p(90)": 2.2392383000000007,
+      "p(95)": 3.7047092
+    },
+    "http_req_duration{scenario:reads}": {
+      "avg": 1.0868967255214732,
+      "min": 0.283635,
+      "med": 0.8450995,
+      "p(90)": 1.6230616000000002,
+      "p(95)": 1.8742987999999994,
+      "p(99)": 3.4518230400000003,
+      "max": 153.803569
+    },
+    "dropped_iterations{scenario:reads}": {
+      "count": 18,
+      "rate": 0.09999927463859486
+    },
+    "http_req_duration{scenario:writes}": {
+      "avg": 4.518750967055579,
+      "min": 1.185103,
+      "med": 3.6068775,
+      "p(90)": 5.6293529,
+      "p(95)": 6.271741549999996,
+      "p(99)": 8.548004400000005,
+      "max": 555.033358
+    }
+  }
+}

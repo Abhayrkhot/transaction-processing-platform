@@ -1,0 +1,68 @@
+== baseline (rerun-r200-w1000, cache false) 21:23:57
+ Container ledger-redis-1  Running
+ Container ledger-postgres-1  Running
+ Container ledger-kafka-1  Running
+ Container ledger-ledger-1  Recreate
+ Container ledger-ledger-1  Recreated
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-redis-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-ledger-1  Starting
+ Container ledger-ledger-1  Started
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-ledger-1  Waiting
+ Container ledger-postgres-1  Waiting
+ Container ledger-redis-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-ledger-1  Healthy
+{"phase":"baseline","before":{"pg":{"xact_commit" : 4525072, "tup_returned" : 6247451053, "tup_fetched" : 6221410924, "blks_hit" : 6443094530},"cache_hit":0.0,"cache_miss":0.0},"after":{"pg":{"xact_commit" : 6581327, "tup_returned" : 7826882968, "tup_fetched" : 11398482586, "blks_hit" : 7560049076},"cache_hit":0.0,"cache_miss":0.0}}
+== indexed (rerun-r200-w1000, cache false) 21:29:20
+ Container ledger-kafka-1  Running
+ Container ledger-redis-1  Running
+ Container ledger-postgres-1  Running
+ Container ledger-ledger-1  Running
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-postgres-1  Waiting
+ Container ledger-postgres-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-redis-1  Healthy
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-ledger-1  Waiting
+ Container ledger-ledger-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-redis-1  Healthy
+ Container ledger-kafka-1  Healthy
+{"phase":"indexed","before":{"pg":{"xact_commit" : 6595242, "tup_returned" : 7841841973, "tup_fetched" : 11400432986, "blks_hit" : 7562321800},"cache_hit":0.0,"cache_miss":0.0},"after":{"pg":{"xact_commit" : 7269367, "tup_returned" : 8363406472, "tup_fetched" : 11934927044, "blks_hit" : 8106201511},"cache_hit":0.0,"cache_miss":0.0}}
+NOTICE:  relation "entries_account_recent_idx" already exists, skipping
+NOTICE:  index "entries_account_id_idx" does not exist, skipping
+== indexed-cached (rerun-r200-w1000, cache true) 21:34:23
+ Container ledger-redis-1  Running
+ Container ledger-postgres-1  Running
+ Container ledger-kafka-1  Running
+ Container ledger-ledger-1  Recreate
+ Container ledger-ledger-1  Recreated
+ Container ledger-redis-1  Waiting
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-ledger-1  Starting
+ Container ledger-ledger-1  Started
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-ledger-1  Waiting
+ Container ledger-redis-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-ledger-1  Healthy
+{"phase":"indexed-cached","before":{"pg":{"xact_commit" : 7270507, "tup_returned" : 8363995180, "tup_fetched" : 11935515171, "blks_hit" : 8106855059},"cache_hit":0.0,"cache_miss":0.0},"after":{"pg":{"xact_commit" : 7932213, "tup_returned" : 8912886686, "tup_fetched" : 12483395814, "blks_hit" : 8672213062},"cache_hit":6948.0,"cache_miss":53053.0}}
