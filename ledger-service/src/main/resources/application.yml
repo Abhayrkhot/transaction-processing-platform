@@ -1,0 +1,105 @@
+spring:
+  application:
+    name: ledger-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:ledger}?socketTimeout=30&tcpKeepAlive=true&reWriteBatchedInserts=true
+    username: ${DB_USER:ledger}
+    password: ${DB_PASSWORD:ledger}
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:40}
+      connection-timeout: 5000
+      validation-timeout: 2000
+  flyway:
+    # Benchmarks set FLYWAY_TARGET=2 to measure the schema before the V3 query indexes.
+    target: ${FLYWAY_TARGET:latest}
+    postgresql:
+      # Session-level migration lock: a transaction-scoped one would make
+      # CREATE INDEX CONCURRENTLY (V3) wait on Flyway's own open transaction forever.
+      transactional-lock: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      acks: all
+      properties:
+        enable.idempotence: true
+        linger.ms: 5
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 200
+    listener:
+      ack-mode: batch
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 200ms
+      connect-timeout: 500ms
+  mvc:
+    problemdetails:
+      enabled: true
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  shutdown: graceful
+  tomcat:
+    threads:
+      max: ${HTTP_THREADS:200}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+
+logging:
+  structured:
+    format:
+      console: ${LOG_FORMAT:}
+
+ledger:
+  account-cache:
+    enabled: ${ACCOUNT_CACHE_ENABLED:true}
+    ttl: 60s
+  recent-entries: 20
+  kafka:
+    transfer-requests-topic: ledger.transfer-requests
+    posted-topic: ledger.transactions.posted
+    partitions: 12
+    replicas: ${KAFKA_REPLICAS:1}
+    ingest-concurrency: ${INGEST_CONCURRENCY:6}
+    risk-concurrency: ${RISK_CONCURRENCY:6}
+  outbox:
+    batch-size: 500
+    poll-interval-ms: 20
+
+risk:
+  large-amount:
+    absolute-limit: 2500000        # $25,000.00 always alerts
+    min-amount: 250000             # $2,500.00 floor for the relative and low-history checks
+    min-history: 5
+    multiplier: 10                 # x the account's 30-day average outgoing amount
+    lookback: 30d
+  velocity:
+    window: 10m
+    max-transfers: 8
+  structuring:
+    threshold: 1000000             # $10,000.00 reporting threshold
+    band-percent: 10               # amounts within 10% below the threshold
+    window: 24h
+    min-count: 3
+  round-trip:
+    window: 1h
+    amount-tolerance-percent: 5
+    min-amount: 50000              # $500.00
+  duplicate-payment:
+    window: 5m
