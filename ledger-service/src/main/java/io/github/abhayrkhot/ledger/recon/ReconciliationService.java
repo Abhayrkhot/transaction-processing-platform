@@ -3,6 +3,7 @@ package io.github.abhayrkhot.ledger.recon;
 import static io.github.abhayrkhot.ledger.common.Jdbc.ts;
 import static io.github.abhayrkhot.ledger.common.Jdbc.uuid;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +46,17 @@ public class ReconciliationService {
     private record LedgerRecord(UUID id, String reference, long amount, String currency) {}
 
     private static final int LOOKUP_CHUNK = 1000;
+    private static final Duration SETTLEMENT_TOLERANCE = Duration.ofDays(2);
+
+    /** Posted transactions that crossed a clearing (SYSTEM) account, i.e. ones the network settles. */
+    private static final String EXTERNAL_POSTED = """
+            SELECT t.id, t.reference, t.amount, t.currency
+              FROM transactions t
+              JOIN accounts src ON src.id = t.from_account_id
+              JOIN accounts dst ON dst.id = t.to_account_id
+             WHERE t.status = 'POSTED' AND t.reference IS NOT NULL
+               AND t.occurred_at >= :from AND t.occurred_at < :to
+               AND (src.type = 'SYSTEM' OR dst.type = 'SYSTEM')""";
 
     private final JdbcClient jdbc;
 
@@ -54,18 +66,22 @@ public class ReconciliationService {
 
     @Transactional
     public Report reconcile(List<SettlementLine> lines, Instant from, Instant to) {
+        List<LedgerRecord> window = externalTransactions(from, to);
         Map<String, LedgerRecord> ledger = new HashMap<>();
-        for (LedgerRecord r : externalTransactions(from, to)) {
-            ledger.put(r.reference(), r);
+        List<LedgerRecord> sameReference = new ArrayList<>();
+        for (LedgerRecord r : window) {
+            if (ledger.putIfAbsent(r.reference(), r) != null) {
+                sameReference.add(r); // e.g. one deposit posted twice under two keys: at most one can settle
+            }
         }
-        int ledgerRecords = ledger.size();
+        int ledgerRecords = window.size();
 
         Map<String, List<SettlementLine>> byReference = new LinkedHashMap<>();
         lines.forEach(l -> byReference.computeIfAbsent(l.reference(), k -> new ArrayList<>()).add(l));
 
         // Settlement lines may legitimately refer to transactions just outside the window.
         List<String> outside = byReference.keySet().stream().filter(r -> !ledger.containsKey(r)).toList();
-        Map<String, LedgerRecord> outsideWindow = lookupByReference(outside);
+        Map<String, LedgerRecord> outsideWindow = lookupNearWindow(outside, from, to);
 
         List<Break> breaks = new ArrayList<>();
         int matched = 0;
@@ -89,7 +105,9 @@ public class ReconciliationService {
                 matched++;
             }
         }
-        for (LedgerRecord unmatched : ledger.values()) {
+        List<LedgerRecord> unsettled = new ArrayList<>(ledger.values());
+        unsettled.addAll(sameReference);
+        for (LedgerRecord unmatched : unsettled) {
             breaks.add(new Break(BreakType.MISSING_IN_SETTLEMENT, unmatched.reference(), unmatched.id(), unmatched.amount(), null));
         }
 
@@ -153,29 +171,28 @@ public class ReconciliationService {
     }
 
     private List<LedgerRecord> externalTransactions(Instant from, Instant to) {
-        return jdbc.sql("""
-                        SELECT t.id, t.reference, t.amount, t.currency
-                          FROM transactions t
-                          JOIN accounts src ON src.id = t.from_account_id
-                          JOIN accounts dst ON dst.id = t.to_account_id
-                         WHERE t.status = 'POSTED' AND t.reference IS NOT NULL
-                           AND t.occurred_at >= :from AND t.occurred_at < :to
-                           AND (src.type = 'SYSTEM' OR dst.type = 'SYSTEM')
-                        """)
+        return jdbc.sql(EXTERNAL_POSTED)
                 .param("from", ts(from))
                 .param("to", ts(to))
                 .query((rs, i) -> new LedgerRecord(uuid(rs, "id"), rs.getString("reference"), rs.getLong("amount"), rs.getString("currency")))
                 .list();
     }
 
-    private Map<String, LedgerRecord> lookupByReference(List<String> references) {
+    /**
+     * Settlement can lag or lead the ledger by a little; a line may match an external
+     * transaction up to {@link #SETTLEMENT_TOLERANCE} outside the window, never further, so an
+     * old transaction settled again in a later file is still reported.
+     */
+    private Map<String, LedgerRecord> lookupNearWindow(List<String> references, Instant from, Instant to) {
         Map<String, LedgerRecord> found = new HashMap<>();
         for (int i = 0; i < references.size(); i += LOOKUP_CHUNK) {
-            jdbc.sql("SELECT id, reference, amount, currency FROM transactions WHERE status = 'POSTED' AND reference IN (:refs)")
+            jdbc.sql(EXTERNAL_POSTED + " AND t.reference IN (:refs)")
+                    .param("from", ts(from.minus(SETTLEMENT_TOLERANCE)))
+                    .param("to", ts(to.plus(SETTLEMENT_TOLERANCE)))
                     .param("refs", references.subList(i, Math.min(i + LOOKUP_CHUNK, references.size())))
                     .query((rs, n) -> new LedgerRecord(uuid(rs, "id"), rs.getString("reference"), rs.getLong("amount"), rs.getString("currency")))
                     .list()
-                    .forEach(r -> found.put(r.reference(), r));
+                    .forEach(r -> found.putIfAbsent(r.reference(), r));
         }
         return found;
     }

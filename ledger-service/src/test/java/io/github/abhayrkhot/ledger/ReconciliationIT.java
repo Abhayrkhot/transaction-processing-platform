@@ -34,6 +34,9 @@ class ReconciliationIT extends IntegrationTest {
         for (int i = 0; i < 5; i++) {
             transfer(clearing.id(), customer.id(), 10_000 + i, "dep-" + run + "-" + i, day.plus(Duration.ofHours(i)));
         }
+        // dep-5 is credited twice under two idempotency keys but settles once.
+        transfer(clearing.id(), customer.id(), 10_005, "dep-" + run + "-5", day.plus(Duration.ofHours(5)));
+        transfer(clearing.id(), customer.id(), 10_005, "dep-" + run + "-5", day.plus(Duration.ofHours(5)));
         // dep-0, dep-1 match; dep-2 has the wrong amount; dep-3 is settled twice; dep-4 is missing; ghost is unknown
         String csv = String.join("\n",
                 "reference,amount,currency,value_date",
@@ -42,6 +45,7 @@ class ReconciliationIT extends IntegrationTest {
                 line("dep-" + run + "-2", 10_502, day),
                 line("dep-" + run + "-3", 10_003, day),
                 line("dep-" + run + "-3", 10_003, day),
+                line("dep-" + run + "-5", 10_005, day),
                 line("ghost-" + run, 777, day));
 
         var response = HttpClient.newHttpClient().send(HttpRequest.newBuilder(URI.create(
@@ -51,13 +55,15 @@ class ReconciliationIT extends IntegrationTest {
 
         assertThat(response.statusCode()).isEqualTo(200);
         var report = json.readValue(response.body(), ReconciliationService.Report.class);
-        assertThat(report.matched()).isEqualTo(3);
+        assertThat(report.ledgerRecords()).isEqualTo(7);
+        assertThat(report.matched()).isEqualTo(4);
         assertThat(report.breakCounts()).containsEntry(BreakType.AMOUNT_MISMATCH, 1)
                 .containsEntry(BreakType.DUPLICATE_SETTLEMENT, 1)
-                .containsEntry(BreakType.MISSING_IN_SETTLEMENT, 1)
+                .containsEntry(BreakType.MISSING_IN_SETTLEMENT, 2)
                 .containsEntry(BreakType.MISSING_IN_LEDGER, 1);
         assertThat(report.breaks()).filteredOn(b -> b.type() == BreakType.MISSING_IN_SETTLEMENT)
-                .extracting(ReconciliationService.Break::reference).containsExactly("dep-" + run + "-4");
+                .extracting(ReconciliationService.Break::reference)
+                .containsExactlyInAnyOrder("dep-" + run + "-4", "dep-" + run + "-5");
     }
 
     @Test

@@ -5,7 +5,12 @@
 --
 -- CONCURRENTLY keeps writes flowing while the index builds; Flyway runs this file outside
 -- a transaction because every statement in it is non-transactional.
-CREATE INDEX CONCURRENTLY IF NOT EXISTS entries_account_recent_idx
+--
+-- An interrupted CONCURRENTLY build leaves an INVALID index behind; drop any leftover so a
+-- rerun builds it again instead of skipping it and then dropping the only usable index.
+DROP INDEX CONCURRENTLY IF EXISTS entries_account_recent_idx;
+
+CREATE INDEX CONCURRENTLY entries_account_recent_idx
     ON entries (account_id, id DESC)
     INCLUDE (transaction_id, amount, balance_after, posted_at);
 

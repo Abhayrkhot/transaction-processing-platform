@@ -23,6 +23,10 @@ spring:
       properties:
         enable.idempotence: true
         linger.ms: 5
+        # Fail fast instead of blocking the outbox relay (which holds a DB transaction) for minutes.
+        max.block.ms: 5000
+        request.timeout.ms: 10000
+        delivery.timeout.ms: 25000
     consumer:
       auto-offset-reset: earliest
       enable-auto-commit: false
@@ -40,6 +44,8 @@ spring:
       enabled: true
   jackson:
     default-property-inclusion: non_null
+    deserialization:
+      accept-float-as-int: false   # "amount": 19.99 is a 400, never 19
 
 server:
   shutdown: graceful

@@ -56,12 +56,13 @@ public class AccountRepository {
     }
 
     /**
-     * Locks both accounts of a transfer. Postgres applies FOR UPDATE to rows as they leave
-     * the sort, so every transfer takes its two locks in id order and transfers cannot
-     * deadlock on each other.
+     * Locks both accounts of a transfer. Postgres locks rows as they leave the sort, so every
+     * transfer takes its two locks in id order and transfers cannot deadlock on each other.
+     * NO KEY UPDATE is the lock the balance UPDATE takes anyway; unlike FOR UPDATE it does not
+     * conflict with the KEY SHARE locks that foreign-key checks (entries, risk_alerts) take.
      */
     public List<Account> lockForTransfer(UUID a, UUID b) {
-        return jdbc.sql("SELECT " + COLUMNS + " FROM accounts WHERE id IN (:a, :b) ORDER BY id FOR UPDATE")
+        return jdbc.sql("SELECT " + COLUMNS + " FROM accounts WHERE id IN (:a, :b) ORDER BY id FOR NO KEY UPDATE")
                 .param("a", a)
                 .param("b", b)
                 .query(ACCOUNT)

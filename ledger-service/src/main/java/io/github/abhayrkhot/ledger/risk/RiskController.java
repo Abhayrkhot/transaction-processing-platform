@@ -9,13 +9,11 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.jdbc.core.simple.JdbcClient;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Validated
 class RiskController {
 
     record AlertView(long id, String rule, UUID accountId, UUID transactionId, UUID relatedTransactionId,

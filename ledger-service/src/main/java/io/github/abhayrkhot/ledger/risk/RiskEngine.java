@@ -7,6 +7,7 @@ import static io.github.abhayrkhot.ledger.common.Jdbc.uuid;
 import io.github.abhayrkhot.ledger.account.Account;
 import io.github.abhayrkhot.ledger.transfer.TransactionPostedEvent;
 import io.micrometer.core.instrument.MeterRegistry;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,7 @@ public class RiskEngine {
         var p = rules.velocity();
         Instant since = e.occurredAt().minus(p.window());
         long count = countOutgoing(e.fromAccountId(), since, e.occurredAt(), 0, Long.MAX_VALUE);
-        if (count < p.maxTransfers() || recentlyAlerted(Rule.VELOCITY, e.fromAccountId(), since, e.occurredAt())) {
+        if (count < p.maxTransfers() || alertedNear(Rule.VELOCITY, e.fromAccountId(), e.occurredAt(), p.window())) {
             return Optional.empty();
         }
         return alert(Rule.VELOCITY, e, null, count + " transfers within " + p.window());
@@ -116,7 +117,7 @@ public class RiskEngine {
         }
         Instant since = e.occurredAt().minus(p.window());
         long count = countOutgoing(e.fromAccountId(), since, e.occurredAt(), floor, p.threshold() - 1);
-        if (count < p.minCount() || recentlyAlerted(Rule.STRUCTURING, e.fromAccountId(), since, e.occurredAt())) {
+        if (count < p.minCount() || alertedNear(Rule.STRUCTURING, e.fromAccountId(), e.occurredAt(), p.window())) {
             return Optional.empty();
         }
         return alert(Rule.STRUCTURING, e, null, count + " transfers in [" + floor + ", " + p.threshold() + ") within " + p.window());
@@ -199,16 +200,17 @@ public class RiskEngine {
                 .single();
     }
 
-    private boolean recentlyAlerted(Rule rule, UUID account, Instant since, Instant until) {
+    /** One alert per burst: looks both ways so out-of-order evaluation does not alert twice. */
+    private boolean alertedNear(Rule rule, UUID account, Instant at, Duration window) {
         return jdbc.sql("""
                         SELECT EXISTS (SELECT 1 FROM risk_alerts
                                         WHERE account_id = :account AND rule = :rule
-                                          AND occurred_at > :since AND occurred_at <= :until)
+                                          AND occurred_at > :since AND occurred_at < :until)
                         """)
                 .param("account", account)
                 .param("rule", rule.name())
-                .param("since", ts(since))
-                .param("until", ts(until))
+                .param("since", ts(at.minus(window)))
+                .param("until", ts(at.plus(window)))
                 .query(Boolean.class)
                 .single();
     }

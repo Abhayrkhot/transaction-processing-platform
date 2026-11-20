@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.github.abhayrkhot.ledger.common.LedgerException;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.CannotAcquireLockException;
+import org.springframework.dao.QueryTimeoutException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.kafka.listener.ListenerExecutionFailedException;
 import org.springframework.transaction.CannotCreateTransactionException;
@@ -18,5 +19,6 @@ class KafkaConfigTest {
         assertThat(KafkaConfig.isInfrastructureFailure(new CannotAcquireLockException("lock timeout"))).isTrue();
         assertThat(KafkaConfig.isInfrastructureFailure(LedgerException.invalid("X", "bad"))).isFalse();
         assertThat(KafkaConfig.isInfrastructureFailure(new IllegalStateException("bug"))).isFalse();
+        assertThat(KafkaConfig.isInfrastructureFailure(new QueryTimeoutException("statement timeout"))).isFalse();
     }
 }

@@ -38,6 +38,10 @@ class TransferApiIT extends IntegrationTest {
         assertThat(post("/api/v1/transfers", UUID.randomUUID().toString(), transferJson(a, b, 999_999)).statusCode()).isEqualTo(422);
         assertThat(post("/api/v1/transfers", null, body).statusCode()).isEqualTo(400);
         assertThat(post("/api/v1/transfers", UUID.randomUUID().toString(), transferJson(a, b, 0)).statusCode()).isEqualTo(400);
+        assertThat(post("/api/v1/transfers", "k".repeat(129), body).statusCode()).isEqualTo(400);
+        assertThat(post("/api/v1/transfers", UUID.randomUUID().toString(),
+                body.replace("\"amount\":1200", "\"amount\":12.5")).statusCode()).isEqualTo(400);
+        assertThat(get("/api/v1/accounts/" + b.id() + "/entries?limit=0").statusCode()).isEqualTo(400);
 
         var account = get("/api/v1/accounts/" + b.id());
         assertThat(account.statusCode()).isEqualTo(200);
