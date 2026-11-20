@@ -1,0 +1,236 @@
+run risk-s2-1795201868: 113,108 transfers over 14 days, 600 labelled risk anomalies, 200 settlement breaks; producing at 3,000/s
+  sent 20,000 / 113,108
+  sent 40,000 / 113,108
+  sent 60,000 / 113,108
+  sent 80,000 / 113,108
+  sent 100,000 / 113,108
+labels in ~/Projects/transaction-processing-platform/bench-data/risk-s2-1795201868
+  posted 66,562 / 113,108, ingest lag 46,465, outbox 58, risk lag 9
+  posted 70,301 / 113,108, ingest lag 42,894, outbox 23, risk lag 0
+  posted 73,448 / 113,108, ingest lag 39,894, outbox 47, risk lag 41
+  posted 76,593 / 113,108, ingest lag 36,894, outbox 39, risk lag 41
+  posted 79,693 / 113,108, ingest lag 33,494, outbox 38, risk lag 44
+  posted 82,638 / 113,108, ingest lag 30,894, outbox 64, risk lag 0
+  posted 85,525 / 113,108, ingest lag 27,694, outbox 21, risk lag 0
+  posted 88,380 / 113,108, ingest lag 24,894, outbox 58, risk lag 0
+  posted 91,444 / 113,108, ingest lag 21,694, outbox 42, risk lag 0
+  posted 94,274 / 113,108, ingest lag 19,094, outbox 25, risk lag 45
+  posted 97,116 / 113,108, ingest lag 16,339, outbox 16, risk lag 0
+  posted 100,438 / 113,108, ingest lag 13,111, outbox 31, risk lag 37
+  posted 103,534 / 113,108, ingest lag 9,822, outbox 59, risk lag 0
+  posted 106,176 / 113,108, ingest lag 7,113, outbox 15, risk lag 0
+  posted 107,972 / 113,108, ingest lag 5,471, outbox 24, risk lag 0
+  posted 109,667 / 113,108, ingest lag 3,625, outbox 19, risk lag 8
+  posted 110,760 / 113,108, ingest lag 2,454, outbox 2, risk lag 0
+  posted 111,434 / 113,108, ingest lag 1,654, outbox 11, risk lag 0
+  posted 112,066 / 113,108, ingest lag 1,054, outbox 9, risk lag 0
+  posted 112,709 / 113,108, ingest lag 338, outbox 4, risk lag 6
+  posted 113,108 / 113,108, ingest lag 0, outbox 0, risk lag 0
+{
+  "run": "risk-s2-1795201868",
+  "transfers": 113108,
+  "rejectedTransfers": 0,
+  "byType": {
+    "RISK:LARGE_AMOUNT": {"seeded": 120, "identified": 120},
+    "RISK:VELOCITY": {"seeded": 120, "identified": 120},
+    "RISK:STRUCTURING": {"seeded": 120, "identified": 120},
+    "RISK:ROUND_TRIP": {"seeded": 120, "identified": 120},
+    "RISK:DUPLICATE_PAYMENT": {"seeded": 120, "identified": 120},
+    "RECON:AMOUNT_MISMATCH": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:DUPLICATE_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_LEDGER": {"seeded": 50, "identified": 50}
+  },
+  "riskRecall": 1.0000,
+  "reconRecall": 1.0000,
+  "seededAnomalies": 800,
+  "identified": 800,
+  "recall": 1.0000,
+  "alerts": 1344,
+  "alertsOnSeededTransactions": 1281,
+  "alertsOnOrdinaryTransactions": 63,
+  "ordinaryTransactionFalsePositiveRate": 0.00057,
+  "unexpectedReconciliationBreaks": 0,
+  "missed": []
+}
+
+run risk-s3-1795201960: 113,740 transfers over 14 days, 600 labelled risk anomalies, 200 settlement breaks; producing at 3,000/s
+  sent 20,000 / 113,740
+  sent 40,000 / 113,740
+  sent 60,000 / 113,740
+  sent 80,000 / 113,740
+  sent 100,000 / 113,740
+labels in ~/Projects/transaction-processing-platform/bench-data/risk-s3-1795201960
+  posted 56,154 / 113,740, ingest lag 57,529, outbox 15, risk lag 0
+  posted 59,644 / 113,740, ingest lag 54,267, outbox 47, risk lag 0
+  posted 62,621 / 113,740, ingest lag 51,538, outbox 52, risk lag 0
+  posted 65,840 / 113,740, ingest lag 48,050, outbox 35, risk lag 44
+  posted 69,155 / 113,740, ingest lag 44,650, outbox 51, risk lag 0
+  posted 72,317 / 113,740, ingest lag 41,850, outbox 25, risk lag 37
+  posted 75,485 / 113,740, ingest lag 38,541, outbox 39, risk lag 8
+  posted 78,699 / 113,740, ingest lag 35,189, outbox 38, risk lag 44
+  posted 81,635 / 113,740, ingest lag 32,389, outbox 31, risk lag 46
+  posted 84,564 / 113,740, ingest lag 29,189, outbox 19, risk lag 0
+  posted 87,449 / 113,740, ingest lag 26,389, outbox 37, risk lag 45
+  posted 90,573 / 113,740, ingest lag 23,444, outbox 52, risk lag 0
+  posted 93,852 / 113,740, ingest lag 19,902, outbox 35, risk lag 0
+  posted 96,946 / 113,740, ingest lag 16,997, outbox 11, risk lag 0
+  posted 100,098 / 113,740, ingest lag 13,897, outbox 42, risk lag 0
+  posted 102,907 / 113,740, ingest lag 10,897, outbox 32, risk lag 38
+  posted 105,606 / 113,740, ingest lag 8,297, outbox 47, risk lag 0
+  posted 108,225 / 113,740, ingest lag 5,897, outbox 17, risk lag 7
+  posted 110,386 / 113,740, ingest lag 3,521, outbox 10, risk lag 21
+  posted 111,619 / 113,740, ingest lag 2,175, outbox 11, risk lag 18
+  posted 112,408 / 113,740, ingest lag 1,419, outbox 4, risk lag 9
+  posted 113,121 / 113,740, ingest lag 619, outbox 8, risk lag 0
+  posted 113,740 / 113,740, ingest lag 0, outbox 0, risk lag 0
+{
+  "run": "risk-s3-1795201960",
+  "transfers": 113740,
+  "rejectedTransfers": 0,
+  "byType": {
+    "RISK:LARGE_AMOUNT": {"seeded": 120, "identified": 120},
+    "RISK:VELOCITY": {"seeded": 120, "identified": 120},
+    "RISK:STRUCTURING": {"seeded": 120, "identified": 119},
+    "RISK:ROUND_TRIP": {"seeded": 120, "identified": 120},
+    "RISK:DUPLICATE_PAYMENT": {"seeded": 120, "identified": 120},
+    "RECON:DUPLICATE_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:AMOUNT_MISMATCH": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_LEDGER": {"seeded": 50, "identified": 50}
+  },
+  "riskRecall": 0.9983,
+  "reconRecall": 1.0000,
+  "seededAnomalies": 800,
+  "identified": 799,
+  "recall": 0.9988,
+  "alerts": 1362,
+  "alertsOnSeededTransactions": 1305,
+  "alertsOnOrdinaryTransactions": 57,
+  "ordinaryTransactionFalsePositiveRate": 0.00052,
+  "unexpectedReconciliationBreaks": 0,
+  "missed": ["STRUCTURING-6"]
+}
+
+run risk-s4-1795202058: 115,363 transfers over 14 days, 600 labelled risk anomalies, 200 settlement breaks; producing at 3,000/s
+  sent 20,000 / 115,363
+  sent 40,000 / 115,363
+  sent 60,000 / 115,363
+  sent 80,000 / 115,363
+  sent 100,000 / 115,363
+labels in ~/Projects/transaction-processing-platform/bench-data/risk-s4-1795202058
+  posted 50,840 / 115,363, ingest lag 64,000, outbox 30, risk lag 0
+  posted 54,617 / 115,363, ingest lag 60,800, outbox 18, risk lag 0
+  posted 57,708 / 115,363, ingest lag 57,958, outbox 41, risk lag 49
+  posted 61,020 / 115,363, ingest lag 54,456, outbox 31, risk lag 45
+  posted 64,033 / 115,363, ingest lag 51,456, outbox 49, risk lag 0
+  posted 67,011 / 115,363, ingest lag 48,456, outbox 19, risk lag 0
+  posted 70,227 / 115,363, ingest lag 45,396, outbox 20, risk lag 0
+  posted 73,291 / 115,363, ingest lag 42,246, outbox 31, risk lag 48
+  posted 76,542 / 115,363, ingest lag 39,046, outbox 46, risk lag 0
+  posted 79,797 / 115,363, ingest lag 35,902, outbox 13, risk lag 0
+  posted 82,816 / 115,363, ingest lag 32,502, outbox 38, risk lag 0
+  posted 86,107 / 115,363, ingest lag 29,702, outbox 25, risk lag 48
+  posted 89,287 / 115,363, ingest lag 26,302, outbox 49, risk lag 0
+  posted 92,465 / 115,363, ingest lag 23,135, outbox 42, risk lag 7
+  posted 95,652 / 115,363, ingest lag 20,228, outbox 36, risk lag 43
+  posted 98,619 / 115,363, ingest lag 16,759, outbox 40, risk lag 0
+  posted 101,322 / 115,363, ingest lag 14,412, outbox 20, risk lag 0
+  posted 104,042 / 115,363, ingest lag 11,686, outbox 22, risk lag 38
+  posted 106,451 / 115,363, ingest lag 9,141, outbox 35, risk lag 0
+  posted 108,711 / 115,363, ingest lag 6,789, outbox 9, risk lag 0
+  posted 110,680 / 115,363, ingest lag 4,683, outbox 16, risk lag 18
+  posted 111,841 / 115,363, ingest lag 3,483, outbox 18, risk lag 0
+  posted 112,804 / 115,363, ingest lag 2,581, outbox 5, risk lag 8
+  posted 113,498 / 115,363, ingest lag 1,981, outbox 7, risk lag 10
+  posted 114,162 / 115,363, ingest lag 1,232, outbox 6, risk lag 10
+  posted 114,885 / 115,363, ingest lag 432, outbox 6, risk lag 0
+  posted 115,363 / 115,363, ingest lag 0, outbox 0, risk lag 0
+{
+  "run": "risk-s4-1795202058",
+  "transfers": 115363,
+  "rejectedTransfers": 0,
+  "byType": {
+    "RISK:LARGE_AMOUNT": {"seeded": 120, "identified": 120},
+    "RISK:VELOCITY": {"seeded": 120, "identified": 120},
+    "RISK:STRUCTURING": {"seeded": 120, "identified": 120},
+    "RISK:ROUND_TRIP": {"seeded": 120, "identified": 120},
+    "RISK:DUPLICATE_PAYMENT": {"seeded": 120, "identified": 120},
+    "RECON:AMOUNT_MISMATCH": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:DUPLICATE_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_LEDGER": {"seeded": 50, "identified": 50}
+  },
+  "riskRecall": 1.0000,
+  "reconRecall": 1.0000,
+  "seededAnomalies": 800,
+  "identified": 800,
+  "recall": 1.0000,
+  "alerts": 1381,
+  "alertsOnSeededTransactions": 1307,
+  "alertsOnOrdinaryTransactions": 74,
+  "ordinaryTransactionFalsePositiveRate": 0.00066,
+  "unexpectedReconciliationBreaks": 0,
+  "missed": []
+}
+
+run risk-s5-1795202167: 113,540 transfers over 14 days, 600 labelled risk anomalies, 200 settlement breaks; producing at 3,000/s
+  sent 20,000 / 113,540
+  sent 40,000 / 113,540
+  sent 60,000 / 113,540
+  sent 80,000 / 113,540
+  sent 100,000 / 113,540
+labels in ~/Projects/transaction-processing-platform/bench-data/risk-s5-1795202167
+  posted 56,928 / 113,540, ingest lag 55,990, outbox 42, risk lag 41
+  posted 61,042 / 113,540, ingest lag 52,603, outbox 57, risk lag 0
+  posted 64,256 / 113,540, ingest lag 49,403, outbox 22, risk lag 0
+  posted 67,493 / 113,540, ingest lag 46,203, outbox 42, risk lag 49
+  posted 70,796 / 113,540, ingest lag 43,003, outbox 32, risk lag 46
+  posted 73,800 / 113,540, ingest lag 39,803, outbox 23, risk lag 0
+  posted 77,029 / 113,540, ingest lag 36,603, outbox 27, risk lag 41
+  posted 80,258 / 113,540, ingest lag 33,427, outbox 23, risk lag 47
+  posted 83,363 / 113,540, ingest lag 30,227, outbox 33, risk lag 41
+  posted 86,713 / 113,540, ingest lag 26,753, outbox 21, risk lag 0
+  posted 89,795 / 113,540, ingest lag 24,229, outbox 44, risk lag 0
+  posted 92,841 / 113,540, ingest lag 20,697, outbox 36, risk lag 40
+  posted 96,106 / 113,540, ingest lag 17,766, outbox 14, risk lag 0
+  posted 99,178 / 113,540, ingest lag 14,566, outbox 44, risk lag 0
+  posted 102,263 / 113,540, ingest lag 11,366, outbox 19, risk lag 0
+  posted 105,522 / 113,540, ingest lag 8,157, outbox 14, risk lag 0
+  posted 108,085 / 113,540, ingest lag 5,483, outbox 9, risk lag 0
+  posted 109,018 / 113,540, ingest lag 4,572, outbox 5, risk lag 9
+  posted 109,732 / 113,540, ingest lag 3,799, outbox 6, risk lag 7
+  posted 110,402 / 113,540, ingest lag 3,199, outbox 7, risk lag 11
+  posted 111,111 / 113,540, ingest lag 2,399, outbox 2, risk lag 0
+  posted 111,793 / 113,540, ingest lag 1,799, outbox 4, risk lag 10
+  posted 112,495 / 113,540, ingest lag 1,013, outbox 6, risk lag 10
+  posted 113,202 / 113,540, ingest lag 413, outbox 6, risk lag 10
+  posted 113,540 / 113,540, ingest lag 0, outbox 0, risk lag 0
+{
+  "run": "risk-s5-1795202167",
+  "transfers": 113540,
+  "rejectedTransfers": 0,
+  "byType": {
+    "RISK:LARGE_AMOUNT": {"seeded": 120, "identified": 120},
+    "RISK:VELOCITY": {"seeded": 120, "identified": 120},
+    "RISK:STRUCTURING": {"seeded": 120, "identified": 120},
+    "RISK:ROUND_TRIP": {"seeded": 120, "identified": 120},
+    "RISK:DUPLICATE_PAYMENT": {"seeded": 120, "identified": 120},
+    "RECON:DUPLICATE_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:AMOUNT_MISMATCH": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_LEDGER": {"seeded": 50, "identified": 50}
+  },
+  "riskRecall": 1.0000,
+  "reconRecall": 1.0000,
+  "seededAnomalies": 800,
+  "identified": 800,
+  "recall": 1.0000,
+  "alerts": 1381,
+  "alertsOnSeededTransactions": 1320,
+  "alertsOnOrdinaryTransactions": 61,
+  "ordinaryTransactionFalsePositiveRate": 0.00055,
+  "unexpectedReconciliationBreaks": 0,
+  "missed": []
+}
+

@@ -1,0 +1,78 @@
+{
+  "name": "account-queries-indexed",
+  "env": {
+    "DURATION": "5m",
+    "READ_RATE": "1000",
+    "WRITE_RATE": "1000"
+  },
+  "metrics": {
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 599961
+    },
+    "http_req_failed{scenario:reads}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 300001
+    },
+    "http_req_failed{scenario:writes}": {
+      "passes": 0,
+      "fails": 299960,
+      "rate": 0
+    },
+    "iterations": {
+      "count": 599961,
+      "rate": 1999.8319625161303
+    },
+    "dropped_iterations": {
+      "count": 41,
+      "rate": 0.13666406726964142
+    },
+    "http_req_duration{scenario:reads}": {
+      "p(95)": 1.574274,
+      "p(99)": 3.581722,
+      "max": 320.033406,
+      "avg": 1.1753049873567258,
+      "min": 0.547173,
+      "med": 1.008442,
+      "p(90)": 1.28
+    },
+    "http_reqs": {
+      "count": 599961,
+      "rate": 1999.8319625161303
+    },
+    "checks": {
+      "passes": 599961,
+      "fails": 0,
+      "rate": 1
+    },
+    "http_req_duration{expected_response:true}": {
+      "p(90)": 5.471233,
+      "p(95)": 6.216382,
+      "p(99)": 8.809542600000018,
+      "max": 532.189392,
+      "avg": 3.107665246646031,
+      "min": 0.547173,
+      "med": 2.319544
+    },
+    "http_req_duration": {
+      "p(90)": 5.471233,
+      "p(95)": 6.216382,
+      "p(99)": 8.809542600000018,
+      "max": 532.189392,
+      "avg": 3.107665246646031,
+      "min": 0.547173,
+      "med": 2.319544
+    },
+    "http_req_duration{scenario:writes}": {
+      "med": 4.725704,
+      "p(90)": 6.179472000000001,
+      "p(95)": 7.073799749999997,
+      "p(99)": 10.36128827999999,
+      "max": 532.189392,
+      "avg": 5.040289630387381,
+      "min": 1.312944
+    }
+  }
+}

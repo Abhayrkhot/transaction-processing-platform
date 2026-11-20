@@ -1,0 +1,4 @@
+ledger_kafka_dead_lettered_total{topic="ledger.transfer-requests"} 24.0
+ledger_kafka_retries_total{topic="ledger.transfer-requests"} 24.0
+ledger_transfers_total{channel="kafka",outcome="posted"} 47693.0
+ledger_transfers_total{channel="kafka",outcome="replayed"} 15497.0

@@ -1,0 +1,23 @@
+NOTICE:  relation "entries_account_id_idx" already exists, skipping
+NOTICE:  index "entries_account_recent_idx" does not exist, skipping
+== baseline (sweep-r400, cache false) 18:20:35
+ Container ledger-kafka-1  Running
+ Container ledger-redis-1  Running
+ Container ledger-postgres-1  Running
+ Container ledger-ledger-1  Running
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-kafka-1  Healthy
+ Container ledger-redis-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-ledger-1  Waiting
+ Container ledger-postgres-1  Waiting
+ Container ledger-redis-1  Healthy
+ Container ledger-ledger-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-kafka-1  Healthy
+time="2026-11-20T18:20:50Z" level=warning msg="Insufficient VUs, reached 1500 active VUs and cannot initialize more" executor=constant-arrival-rate scenario=writes
+time="2026-11-20T18:21:07Z" level=warning msg="Insufficient VUs, reached 1500 active VUs and cannot initialize more" executor=constant-arrival-rate scenario=reads

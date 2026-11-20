@@ -26,6 +26,9 @@ export const options = {
     'http_req_duration{scenario:writes}': ['p(95)<10000'],
     'http_req_failed{scenario:reads}': ['rate<0.001'],
     'http_req_failed{scenario:writes}': ['rate<0.001'],
+    // Always true; declared so the per-scenario counts appear in the summary.
+    'dropped_iterations{scenario:reads}': ['count>=0'],
+    'dropped_iterations{scenario:writes}': ['count>=0'],
   },
   summaryTrendStats: ['avg', 'min', 'med', 'p(90)', 'p(95)', 'p(99)', 'max'],
 };

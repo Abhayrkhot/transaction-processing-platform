@@ -1,0 +1,51 @@
+{
+  "name": "throughput-final-2500rps-15m",
+  "env": {
+    "RATE": "2500",
+    "DURATION": "15m"
+  },
+  "metrics": {
+    "http_req_duration{expected_response:true}": {
+      "p(90)": 8.169877,
+      "p(95)": 10.039825,
+      "p(99)": 19.511515,
+      "p(99.9)": 85.78543500000539,
+      "max": 891.825146,
+      "avg": 6.282655315644272,
+      "min": 2.718117,
+      "med": 5.418853
+    },
+    "http_req_failed": {
+      "fails": 2250001,
+      "rate": 0,
+      "passes": 0
+    },
+    "dropped_iterations": {
+      "count": 0,
+      "rate": 0
+    },
+    "http_req_duration": {
+      "avg": 6.282655315644272,
+      "min": 2.718117,
+      "med": 5.418853,
+      "p(90)": 8.169877,
+      "p(95)": 10.039825,
+      "p(99)": 19.511515,
+      "p(99.9)": 85.78543500000539,
+      "max": 891.825146
+    },
+    "http_reqs": {
+      "count": 2250001,
+      "rate": 2499.9847249584536
+    },
+    "iterations": {
+      "count": 2250001,
+      "rate": 2499.9847249584536
+    },
+    "checks": {
+      "rate": 1,
+      "passes": 2250001,
+      "fails": 0
+    }
+  }
+}

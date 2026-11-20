@@ -61,6 +61,23 @@ class RiskIT extends IntegrationTest {
     }
 
     @Test
+    void earlierFraudDoesNotRaiseTheBaselineForLargeAmounts() {
+        Account a = customer(10_000_000);
+        Account shop = customer(0);
+        Account mule = customer(0);
+        for (int i = 0; i < 8; i++) {
+            transfer(a.id(), shop.id(), 3_000 + 100 * i, null, t0.minus(Duration.ofDays(10 - i)));
+        }
+        for (int i = 0; i < 4; i++) { // structuring the day before
+            transfer(a.id(), mule.id(), 960_000 + i, null, t0.minus(Duration.ofHours(20 - 2 * i)));
+        }
+        var drain = transfer(a.id(), mule.id(), 1_500_000, null, t0);
+        await().atMost(Duration.ofSeconds(30)).untilAsserted(() -> assertThat(jdbc.sql(
+                        "SELECT rule FROM risk_alerts WHERE transaction_id = :t")
+                .param("t", drain.transaction().id()).query(String.class).list()).contains("LARGE_AMOUNT"));
+    }
+
+    @Test
     void duplicatePaymentFlagsTheSecondCopy() {
         Account a = customer(1_000_000);
         Account shop = customer(0);

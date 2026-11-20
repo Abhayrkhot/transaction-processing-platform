@@ -1,0 +1,86 @@
+{
+  "name": "account-queries-readheavy-r3000-w300-indexed",
+  "env": {
+    "DURATION": "3m",
+    "READ_RATE": "3000",
+    "WRITE_RATE": "300"
+  },
+  "metrics": {
+    "http_req_duration{expected_response:true}": {
+      "med": 0.879287,
+      "p(90)": 2.105417,
+      "p(95)": 3.261375,
+      "p(99)": 5.7747451000000165,
+      "max": 424.12786,
+      "avg": 1.3298846588926134,
+      "min": 0.313605
+    },
+    "checks": {
+      "rate": 1,
+      "passes": 593986,
+      "fails": 0
+    },
+    "http_req_duration": {
+      "min": 0.313605,
+      "med": 0.879287,
+      "p(90)": 2.105417,
+      "p(95)": 3.261375,
+      "p(99)": 5.7747451000000165,
+      "max": 424.12786,
+      "avg": 1.3298846588926134
+    },
+    "dropped_iterations{scenario:writes}": {
+      "count": 0,
+      "rate": 0
+    },
+    "http_req_failed{scenario:reads}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 539985
+    },
+    "dropped_iterations": {
+      "count": 16,
+      "rate": 0.08888723814127374
+    },
+    "iterations": {
+      "count": 593986,
+      "rate": 3299.8609396614142
+    },
+    "http_req_duration{scenario:reads}": {
+      "min": 0.313605,
+      "med": 0.836342,
+      "p(90)": 1.6873274000000003,
+      "p(95)": 1.9601639999999998,
+      "p(99)": 3.3804585200000066,
+      "max": 166.457234,
+      "avg": 1.0909430234802622
+    },
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 593986
+    },
+    "http_req_failed{scenario:writes}": {
+      "passes": 0,
+      "fails": 54001,
+      "rate": 0
+    },
+    "http_req_duration{scenario:writes}": {
+      "avg": 3.7191903939371183,
+      "min": 1.172525,
+      "med": 3.019455,
+      "p(90)": 5.246438,
+      "p(95)": 6.030954,
+      "p(99)": 8.411088,
+      "max": 424.12786
+    },
+    "http_reqs": {
+      "rate": 3299.8609396614142,
+      "count": 593986
+    },
+    "dropped_iterations{scenario:reads}": {
+      "count": 16,
+      "rate": 0.08888723814127374
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "account-queries-sweep-r400-baseline",
+  "env": {
+    "DURATION": "2m",
+    "READ_RATE": "400",
+    "WRITE_RATE": "1000"
+  },
+  "metrics": {
+    "checks": {
+      "passes": 79201,
+      "fails": 0,
+      "rate": 1
+    },
+    "dropped_iterations": {
+      "count": 88800,
+      "rate": 705.1862724677334
+    },
+    "http_req_failed{scenario:reads}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 36032
+    },
+    "http_req_failed{scenario:writes}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 43169
+    },
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 79201
+    },
+    "dropped_iterations{scenario:writes}": {
+      "count": 76831,
+      "rate": 610.1370101347795
+    },
+    "http_req_duration{scenario:writes}": {
+      "max": 8855.851648,
+      "avg": 4031.8484594791407,
+      "min": 3.195536,
+      "med": 4678.132981,
+      "p(90)": 5558.8373870000005,
+      "p(95)": 5856.7602522,
+      "p(99)": 6568.117256359999
+    },
+    "http_req_duration{scenario:reads}": {
+      "med": 4830.6411845,
+      "p(90)": 5784.7292232,
+      "p(95)": 6122.398887099999,
+      "p(99)": 6815.01785563,
+      "max": 9146.268026,
+      "avg": 4506.526325543939,
+      "min": 1.546324
+    },
+    "http_req_duration": {
+      "p(90)": 5680.963151,
+      "p(95)": 5983.444733,
+      "p(99)": 6690.358711,
+      "max": 9146.268026,
+      "avg": 4247.80018824584,
+      "min": 1.546324,
+      "med": 4755.364363
+    },
+    "dropped_iterations{scenario:reads}": {
+      "count": 11969,
+      "rate": 95.04926233295384
+    },
+    "http_reqs": {
+      "count": 79201,
+      "rate": 628.95785997429
+    },
+    "http_req_duration{expected_response:true}": {
+      "p(95)": 5983.444733,
+      "p(99)": 6690.358711,
+      "max": 9146.268026,
+      "avg": 4247.80018824584,
+      "min": 1.546324,
+      "med": 4755.364363,
+      "p(90)": 5680.963151
+    },
+    "iterations": {
+      "count": 79201,
+      "rate": 628.95785997429
+    }
+  }
+}

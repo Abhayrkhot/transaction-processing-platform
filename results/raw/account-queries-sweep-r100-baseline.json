@@ -1,0 +1,86 @@
+{
+  "name": "account-queries-sweep-r100-baseline",
+  "env": {
+    "DURATION": "2m",
+    "READ_RATE": "100",
+    "WRITE_RATE": "1000"
+  },
+  "metrics": {
+    "http_req_duration": {
+      "min": 1.020511,
+      "med": 4.243245,
+      "p(90)": 7.226801599999999,
+      "p(95)": 12.711230999999994,
+      "p(99)": 164.8251229600015,
+      "max": 874.050438,
+      "avg": 8.91966926195718
+    },
+    "http_req_duration{expected_response:true}": {
+      "avg": 8.91966926195718,
+      "min": 1.020511,
+      "med": 4.243245,
+      "p(90)": 7.226801599999999,
+      "p(95)": 12.711230999999994,
+      "p(99)": 164.8251229600015,
+      "max": 874.050438
+    },
+    "dropped_iterations": {
+      "rate": 0.44105797763224375,
+      "count": 53
+    },
+    "http_req_duration{scenario:writes}": {
+      "med": 4.268109,
+      "p(90)": 6.5226035000000016,
+      "p(95)": 8.315487849999993,
+      "p(99)": 23.505555259999987,
+      "max": 481.113068,
+      "avg": 5.575232444250785,
+      "min": 1.17126
+    },
+    "checks": {
+      "rate": 1,
+      "passes": 131949,
+      "fails": 0
+    },
+    "http_req_failed{scenario:reads}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 12001
+    },
+    "http_req_duration{scenario:reads}": {
+      "min": 1.020511,
+      "med": 3.373967,
+      "p(90)": 101.409951,
+      "p(95)": 310.183374,
+      "p(99)": 434.405894,
+      "max": 874.050438,
+      "avg": 42.3467592886427
+    },
+    "iterations": {
+      "count": 131949,
+      "rate": 1098.059605482961
+    },
+    "http_reqs": {
+      "rate": 1098.059605482961,
+      "count": 131949
+    },
+    "dropped_iterations{scenario:reads}": {
+      "count": 0,
+      "rate": 0
+    },
+    "dropped_iterations{scenario:writes}": {
+      "count": 53,
+      "rate": 0.44105797763224375
+    },
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 131949
+    },
+    "http_req_failed{scenario:writes}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 119948
+    }
+  }
+}

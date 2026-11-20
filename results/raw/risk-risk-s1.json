@@ -1,0 +1,27 @@
+{
+  "run": "risk-s1",
+  "transfers": 114018,
+  "rejectedTransfers": 0,
+  "byType": {
+    "RISK:LARGE_AMOUNT": {"seeded": 120, "identified": 119},
+    "RISK:VELOCITY": {"seeded": 120, "identified": 120},
+    "RISK:STRUCTURING": {"seeded": 120, "identified": 120},
+    "RISK:ROUND_TRIP": {"seeded": 120, "identified": 118},
+    "RISK:DUPLICATE_PAYMENT": {"seeded": 120, "identified": 120},
+    "RECON:MISSING_IN_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:AMOUNT_MISMATCH": {"seeded": 50, "identified": 50},
+    "RECON:DUPLICATE_SETTLEMENT": {"seeded": 50, "identified": 50},
+    "RECON:MISSING_IN_LEDGER": {"seeded": 50, "identified": 50}
+  },
+  "riskRecall": 0.9950,
+  "reconRecall": 1.0000,
+  "seededAnomalies": 800,
+  "identified": 797,
+  "recall": 0.9963,
+  "alerts": 1199,
+  "alertsOnSeededTransactions": 1135,
+  "alertsOnOrdinaryTransactions": 64,
+  "ordinaryTransactionFalsePositiveRate": 0.00058,
+  "unexpectedReconciliationBreaks": 0,
+  "missed": ["ROUND_TRIP-35","LARGE_AMOUNT-55","ROUND_TRIP-61"]
+}

@@ -1,0 +1,86 @@
+{
+  "name": "account-queries-readheavy-r3000-w300-indexed-cached",
+  "env": {
+    "DURATION": "3m",
+    "READ_RATE": "3000",
+    "WRITE_RATE": "300"
+  },
+  "metrics": {
+    "dropped_iterations{scenario:reads}": {
+      "count": 1787,
+      "rate": 9.927586208455908
+    },
+    "checks": {
+      "rate": 1,
+      "passes": 592215,
+      "fails": 0
+    },
+    "http_req_failed{scenario:writes}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 54001
+    },
+    "iterations": {
+      "count": 592215,
+      "rate": 3290.019846917021
+    },
+    "http_req_duration{expected_response:true}": {
+      "max": 735.630475,
+      "avg": 2.2165230188563156,
+      "min": 0.153264,
+      "med": 0.668419,
+      "p(90)": 2.476289999999999,
+      "p(95)": 3.754825999999993,
+      "p(99)": 7.713930839999987
+    },
+    "http_req_duration{scenario:writes}": {
+      "min": 1.200014,
+      "med": 3.167736,
+      "p(90)": 6.364922,
+      "p(95)": 7.439631,
+      "p(99)": 14.934014,
+      "max": 721.820466,
+      "avg": 5.9742402395697045
+    },
+    "dropped_iterations": {
+      "rate": 9.927586208455908,
+      "count": 1787
+    },
+    "dropped_iterations{scenario:writes}": {
+      "count": 0,
+      "rate": 0
+    },
+    "http_req_failed": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 592215
+    },
+    "http_req_duration{scenario:reads}": {
+      "min": 0.153264,
+      "med": 0.5700324999999999,
+      "p(90)": 1.5861642,
+      "p(95)": 2.338548749999997,
+      "p(99)": 5.318666449999992,
+      "max": 735.630475,
+      "avg": 1.8394973605945393
+    },
+    "http_req_duration": {
+      "p(95)": 3.754825999999993,
+      "p(99)": 7.713930839999987,
+      "max": 735.630475,
+      "avg": 2.2165230188563156,
+      "min": 0.153264,
+      "med": 0.668419,
+      "p(90)": 2.476289999999999
+    },
+    "http_reqs": {
+      "count": 592215,
+      "rate": 3290.019846917021
+    },
+    "http_req_failed{scenario:reads}": {
+      "rate": 0,
+      "passes": 0,
+      "fails": 538214
+    }
+  }
+}

@@ -73,11 +73,15 @@ public class RiskEngine {
         if (e.amount() < p.minAmount()) {
             return Optional.empty();
         }
+        // Transfers that already raised an alert are not "normal" spend; leaving them in would let
+        // an earlier attack (e.g. structuring) raise the average enough to hide the next one.
         var history = jdbc.sql("""
                         SELECT count(*) AS n, coalesce(avg(amount), 0) AS avg
-                          FROM transactions
-                         WHERE from_account_id = :account AND status = 'POSTED'
-                           AND occurred_at >= :since AND occurred_at < :at AND id <> :txn
+                          FROM transactions t
+                         WHERE t.from_account_id = :account AND t.status = 'POSTED'
+                           AND t.occurred_at >= :since AND t.occurred_at < :at AND t.id <> :txn
+                           AND NOT EXISTS (SELECT 1 FROM risk_alerts a
+                                            WHERE a.account_id = :account AND a.transaction_id = t.id)
                         """)
                 .param("account", e.fromAccountId())
                 .param("since", ts(e.occurredAt().minus(p.lookback())))
@@ -129,13 +133,14 @@ public class RiskEngine {
         if (e.amount() < p.minAmount()) {
             return Optional.empty();
         }
-        long tolerance = e.amount() * p.amountTolerancePercent() / 100;
+        // Tolerance is relative to the larger leg, so the match is the same whichever leg is
+        // evaluated (and committed) first.
         return jdbc.sql("""
                         SELECT id, from_account_id, occurred_at
                           FROM transactions
                          WHERE from_account_id = :to AND to_account_id = :from AND status = 'POSTED'
                            AND occurred_at BETWEEN :start AND :end
-                           AND amount BETWEEN :low AND :high
+                           AND abs(amount - :amount) * 100 <= greatest(amount, :amount) * :tolerance
                          ORDER BY abs(extract(epoch FROM occurred_at - :at)), id
                          LIMIT 1
                         """)
@@ -144,8 +149,8 @@ public class RiskEngine {
                 .param("start", ts(e.occurredAt().minus(p.window())))
                 .param("end", ts(e.occurredAt().plus(p.window())))
                 .param("at", ts(e.occurredAt()))
-                .param("low", e.amount() - tolerance)
-                .param("high", e.amount() + tolerance)
+                .param("amount", e.amount())
+                .param("tolerance", p.amountTolerancePercent())
                 .query(RiskEngine::match)
                 .optional()
                 .flatMap(other -> pairAlert(Rule.ROUND_TRIP, e, other, "returned to payer within " + p.window()));

@@ -1,0 +1,80 @@
+run kafka-chaos: producing 125,050 messages (100,000 unique, 25,000 duplicates, 50 poison) at 2,000/s
+chaos: stopping postgres for 15s at 19:04:11
+ Container ledger-postgres-1  Stopping
+  sent 20,000 / 125,050
+ Container ledger-postgres-1  Stopped
+  sent 40,000 / 125,050
+ Container ledger-postgres-1  Starting
+ Container ledger-postgres-1  Started
+chaos: postgres back at 19:04:27
+  sent 60,000 / 125,050
+  sent 80,000 / 125,050
+chaos: SIGKILL ledger at 19:04:42
+ Container ledger-ledger-1  Killing
+ Container ledger-ledger-1  Killed
+ Container ledger-redis-1  Running
+ Container ledger-kafka-1  Running
+ Container ledger-postgres-1  Running
+ Container ledger-redis-1  Waiting
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Healthy
+ Container ledger-postgres-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-ledger-1  Starting
+ Container ledger-ledger-1  Started
+chaos: ledger restarted at 19:04:49
+  sent 100,000 / 125,050
+  sent 120,000 / 125,050
+produced in 62.7s
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 63,214, run transactions 52,307 / 100,000
+  ingest lag 61,814, run transactions 53,891 / 100,000
+  ingest lag 57,880, run transactions 56,938 / 100,000
+  ingest lag 53,693, run transactions 60,100 / 100,000
+  ingest lag 49,716, run transactions 63,318 / 100,000
+  ingest lag 45,851, run transactions 66,514 / 100,000
+  ingest lag 41,582, run transactions 69,779 / 100,000
+  ingest lag 33,822, run transactions 75,668 / 100,000
+  ingest lag 24,329, run transactions 83,346 / 100,000
+  ingest lag 14,400, run transactions 91,080 / 100,000
+  ingest lag 4,173, run transactions 98,271 / 100,000
+  ingest lag 0, run transactions 100,000 / 100,000
+drained after 47.8s of waiting
+{
+  "run": "kafka-chaos",
+  "uniqueRequests": 100000,
+  "duplicateDeliveriesProduced": 25000,
+  "poisonMessages": 50,
+  "transactionsForRun": 100000,
+  "postedForRun": 100000,
+  "entriesForRun": 200000,
+  "duplicatePostings": 0,
+  "accountsChecked": 10000,
+  "accountsWithWrongBalance": 0,
+  "deadLetteredPoison": 50,
+  "deadLetteredValid": 0,
+  "ledgerIntegrity": {"ok":true,"balanceByCurrency":{"USD":0},"accountsNotMatchingEntries":0,"unbalancedTransactions":0,"postedWithoutEntries":0},
+  "ok": true
+}
+
+-- before kill
+ledger_kafka_dead_lettered_total{topic="ledger.transfer-requests"} 68.0
+ledger_kafka_retries_total{topic="ledger.transactions.posted"} 24.0
+ledger_kafka_retries_total{topic="ledger.transfer-requests"} 92.0
+ledger_transfers_total{channel="kafka",outcome="posted"} 134599.0
+ledger_transfers_total{channel="kafka",outcome="replayed"} 34062.0
+-- after restart
+ledger_kafka_dead_lettered_total{topic="ledger.transfer-requests"} 24.0
+ledger_kafka_retries_total{topic="ledger.transfer-requests"} 24.0
+ledger_transfers_total{channel="kafka",outcome="posted"} 47693.0
+ledger_transfers_total{channel="kafka",outcome="replayed"} 15497.0

@@ -1,0 +1,21 @@
+NOTICE:  relation "entries_account_id_idx" already exists, skipping
+NOTICE:  index "entries_account_recent_idx" does not exist, skipping
+== baseline (sweep-r200, cache false) 18:18:32
+ Container ledger-kafka-1  Running
+ Container ledger-redis-1  Running
+ Container ledger-postgres-1  Running
+ Container ledger-ledger-1  Running
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-postgres-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-redis-1  Healthy
+ Container ledger-ledger-1  Waiting
+ Container ledger-postgres-1  Waiting
+ Container ledger-kafka-1  Waiting
+ Container ledger-redis-1  Waiting
+ Container ledger-redis-1  Healthy
+ Container ledger-kafka-1  Healthy
+ Container ledger-ledger-1  Healthy
+ Container ledger-postgres-1  Healthy

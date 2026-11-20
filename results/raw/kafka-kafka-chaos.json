@@ -1,0 +1,16 @@
+{
+  "run": "kafka-chaos",
+  "uniqueRequests": 100000,
+  "duplicateDeliveriesProduced": 25000,
+  "poisonMessages": 50,
+  "transactionsForRun": 100000,
+  "postedForRun": 100000,
+  "entriesForRun": 200000,
+  "duplicatePostings": 0,
+  "accountsChecked": 10000,
+  "accountsWithWrongBalance": 0,
+  "deadLetteredPoison": 50,
+  "deadLetteredValid": 0,
+  "ledgerIntegrity": {"ok":true,"balanceByCurrency":{"USD":0},"accountsNotMatchingEntries":0,"unbalancedTransactions":0,"postedWithoutEntries":0},
+  "ok": true
+}

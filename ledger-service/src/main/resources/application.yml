@@ -10,7 +10,7 @@ spring:
       connection-timeout: 5000
       validation-timeout: 2000
   flyway:
-    # Benchmarks set FLYWAY_TARGET=2 to measure the schema before the V3 query indexes.
+    # FLYWAY_TARGET can hold the schema at an earlier version (e.g. 2 = before the V3 query index).
     target: ${FLYWAY_TARGET:latest}
     postgresql:
       # Session-level migration lock: a transaction-scoped one would make
